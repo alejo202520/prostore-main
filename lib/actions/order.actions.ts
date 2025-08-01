@@ -1,6 +1,6 @@
 'use server';
 
-import { redirect, RedirectError } from 'next/navigation'; // <-- Corregido
+import { RedirectError } from 'next/navigation'; // <-- Corregido
 import { convertToPlainObject, formatError } from '../utils';
 import { auth } from '@/auth';
 import { getMyCart } from './cart.actions';
@@ -98,7 +98,7 @@ export async function createOrder() {
       redirectTo: `/order/${insertedOrderId}`,
     };
   } catch (error) {
-    if (error instanceof RedirectError) throw error; // <-- Corregido
+    if (error instanceof RedirectError) throw error;
     return { success: false, message: formatError(error) };
   }
 }
@@ -361,6 +361,7 @@ export async function getAllOrders({
               contains: query,
               mode: 'insensitive',
             } as Prisma.StringFilter,
+            
           },
         }
       : {};
