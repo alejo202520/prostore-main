@@ -1,6 +1,6 @@
 'use server';
 
-import { isRedirectError } from 'next/navigation';
+import { redirect, RedirectError } from 'next/navigation'; // <-- Corregido
 import { convertToPlainObject, formatError } from '../utils';
 import { auth } from '@/auth';
 import { getMyCart } from './cart.actions';
@@ -98,7 +98,7 @@ export async function createOrder() {
       redirectTo: `/order/${insertedOrderId}`,
     };
   } catch (error) {
-    if (isRedirectError(error)) throw error;
+    if (error instanceof RedirectError) throw error; // <-- Corregido
     return { success: false, message: formatError(error) };
   }
 }
